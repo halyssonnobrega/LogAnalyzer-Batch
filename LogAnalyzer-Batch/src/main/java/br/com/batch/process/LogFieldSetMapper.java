@@ -4,14 +4,14 @@ import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.validation.BindException;
 
-import br.com.batch.entity.Log;
+import br.com.batch.model.LogDTO;
 
-public class LogFieldSetMapper implements FieldSetMapper<Log> {
+public class LogFieldSetMapper implements FieldSetMapper<LogDTO> {
 
 	@Override
-	public Log mapFieldSet(FieldSet fieldSet) throws BindException {
+	public LogDTO mapFieldSet(FieldSet fieldSet) throws BindException {
 
-		Log log = new Log();
+		LogDTO log = new LogDTO();
 
 		log.setDate(fieldSet.readString("date"));
 		log.setIp(fieldSet.readString("ip"));

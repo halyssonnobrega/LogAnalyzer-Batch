@@ -1,17 +1,18 @@
-package br.com.batch.entity;
+package br.com.batch.model;
 
-public class Log {
+public class LogDTO {
+	
 	private String date;
-	private String ip;
+	private String ip;	
 	private String requet;
 	private String status;
 	private String userAgent;
 
-	public Log() {
+	public LogDTO() {
 
 	}
 
-	public Log(String date, String ip, String requet, String status, String userAgent) {
+	public LogDTO(String date, String ip, String requet, String status, String userAgent) {
 		this.date = date;
 		this.ip = ip;
 		this.requet = requet;

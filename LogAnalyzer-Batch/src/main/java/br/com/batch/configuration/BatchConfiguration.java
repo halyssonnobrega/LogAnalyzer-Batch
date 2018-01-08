@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
-import br.com.batch.entity.Log;
+import br.com.batch.model.LogDTO;
 import br.com.batch.process.JobCompletionListener;
 import br.com.batch.process.LogFieldSetMapper;
 import br.com.batch.process.LogItemProcessor;
@@ -51,7 +51,7 @@ public class BatchConfiguration {
 	@Bean
 	public Step step1() {
 		return stepBuilderFactory.get("step1")
-				.<Log, Log>chunk(10)
+				.<LogDTO, LogDTO>chunk(10)
 				.reader(reader())
 				.processor(new LogItemProcessor())
 				.writer(new LogItemWriter())
@@ -59,24 +59,24 @@ public class BatchConfiguration {
 	}
 	
 	@Bean
-	public ItemReader<Log> reader() {
+	public ItemReader<LogDTO> reader() {
     	logger.info("BATCH JOB READER");
-		FlatFileItemReader<Log> reader = new FlatFileItemReader<Log>();
+		FlatFileItemReader<LogDTO> reader = new FlatFileItemReader<LogDTO>();
 		reader.setResource(new ClassPathResource("access.log"));
 		reader.setLineMapper(lineMapper());
 		return reader;
 	}
 	
-	public LineMapper<Log> lineMapper() {
-		DefaultLineMapper<Log> lineMapper = new DefaultLineMapper<Log>();
+	public LineMapper<LogDTO> lineMapper() {
+		DefaultLineMapper<LogDTO> lineMapper = new DefaultLineMapper<LogDTO>();
 
 		DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
 		lineTokenizer.setDelimiter("|");
 		lineTokenizer.setStrict(false);
 		lineTokenizer.setNames(new String[]{"date", "ip", "request", "status", "userAgent"});
 
-		BeanWrapperFieldSetMapper<Log> fieldSetMapper = new BeanWrapperFieldSetMapper<Log>();
-		fieldSetMapper.setTargetType(Log.class);
+		BeanWrapperFieldSetMapper<LogDTO> fieldSetMapper = new BeanWrapperFieldSetMapper<LogDTO>();
+		fieldSetMapper.setTargetType(LogDTO.class);
 
 		lineMapper.setLineTokenizer(lineTokenizer);
 		lineMapper.setFieldSetMapper(logFieldSetMapper());
