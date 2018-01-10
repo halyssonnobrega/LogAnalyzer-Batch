@@ -25,12 +25,20 @@ import br.com.batch.process.JobCompletionListener;
 import br.com.batch.process.LogFieldSetMapper;
 import br.com.batch.process.LogItemProcessor;
 import br.com.batch.process.LogItemWriter;
+import br.com.batch.repository.BlockedIpRepository;
+import br.com.batch.repository.LogRepository;
 
 @Configuration
 @EnableBatchProcessing
 public class BatchConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(BatchConfiguration.class);
+	
+	@Autowired
+	private LogRepository logRepository;
+
+	@Autowired
+	private BlockedIpRepository blockedIpRepository;
 	
 	@Autowired
 	private JobBuilderFactory jobBuilderFactory;
@@ -51,10 +59,10 @@ public class BatchConfiguration {
 	@Bean
 	public Step step1() {
 		return stepBuilderFactory.get("step1")
-				.<LogDTO, LogDTO>chunk(10)
+				.<LogDTO, LogDTO>chunk(100000000)
 				.reader(reader())
-				.processor(new LogItemProcessor())
-				.writer(new LogItemWriter())
+				.processor(new LogItemProcessor(logRepository, blockedIpRepository))
+				.writer(new LogItemWriter(logRepository, blockedIpRepository))
 				.build();
 	}
 	
@@ -91,5 +99,21 @@ public class BatchConfiguration {
 	@Bean
 	public JobExecutionListener listener() {
 		return new JobCompletionListener();
+	}
+
+	public LogRepository getLogRepository() {
+		return logRepository;
+	}
+
+	public void setLogRepository(LogRepository logRepository) {
+		this.logRepository = logRepository;
+	}
+
+	public BlockedIpRepository getBlockedIpRepository() {
+		return blockedIpRepository;
+	}
+
+	public void setBlockedIpRepository(BlockedIpRepository blockedIpRepository) {
+		this.blockedIpRepository = blockedIpRepository;
 	}
 }

@@ -1,37 +1,21 @@
 package br.com.batch.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Comparator;
 
-@Entity
-@Table(name = "tbg_log")
-public class LogEntity {
+import org.springframework.data.mongodb.core.mapping.Document;
 
-	@Id
-	@GeneratedValue
-	private Long id;
+@Document(collection="log")
+public class LogEntity implements Comparator<LogEntity>{
 
-	@Column(name = "date")
 	private String date;
 
-	@Column(name = "ip")
 	private String ip;
 
-	@Column(name = "requet")
-	private String requet;
+	private String request;
 
-	@Column(name = "status")
 	private String status;
 
-	@Column(name = "userAgent")
 	private String userAgent;
-
-	public LogEntity() {
-
-	}
 
 	public String getDate() {
 		return date;
@@ -49,12 +33,12 @@ public class LogEntity {
 		this.ip = ip;
 	}
 
-	public String getRequet() {
-		return requet;
+	public String getRequest() {
+		return request;
 	}
 
-	public void setRequet(String requet) {
-		this.requet = requet;
+	public void setRequest(String request) {
+		this.request = request;
 	}
 
 	public String getStatus() {
@@ -72,12 +56,9 @@ public class LogEntity {
 	public void setUserAgent(String userAgent) {
 		this.userAgent = userAgent;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	
+	@Override
+	public int compare(LogEntity arg0, LogEntity arg1) {
+		return arg0.getIp().compareToIgnoreCase(arg1.getIp());
 	}
 }

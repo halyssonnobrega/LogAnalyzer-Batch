@@ -5,25 +5,60 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 
 import br.com.batch.model.LogDTO;
+import br.com.batch.repository.BlockedIpRepository;
+import br.com.batch.repository.LogRepository;
 
 public class LogItemProcessor implements ItemProcessor<LogDTO, LogDTO> {
-    private static final Logger logger = LoggerFactory.getLogger(LogItemProcessor.class);
+	private static final Logger logger = LoggerFactory.getLogger(LogItemProcessor.class);
 
-    private LogDTO transformedLog;
-    
+	private LogDTO transformedLog;
+
+	private LogRepository logRepository;
+
+	private BlockedIpRepository blockedIpRepository;
+
+	public LogItemProcessor(LogRepository logRepository, BlockedIpRepository blockedIpRepository) {
+		this.logRepository = logRepository;
+		this.setBlockedIpRepository(blockedIpRepository);
+
+		logger.info("DELETING ALL RECORDS...");
+
+		logRepository.deleteAll();
+		blockedIpRepository.deleteAll();
+	}
+
 	@Override
-    public LogDTO process(final LogDTO log) throws Exception {
+	public LogDTO process(final LogDTO log) throws Exception {
 		logger.info("BATCH JOB PROCESS");
 
-        final String date = log.getDate().toUpperCase();
-        final String ip = log.getIp().toUpperCase();
-        final String request = log.getRequet().toUpperCase();
-        final String status = log.getStatus().toUpperCase();
-        final String userAgent = log.getUserAgent().toUpperCase();
-        
-		transformedLog = new LogDTO(date, ip, request, status, userAgent);
-		logger.info("Converting (" + log + ") into (" + transformedLog + ")");
+		final String date = log.getDate().toUpperCase();
+		final String ip = log.getIp().toUpperCase();
+		final String request = log.getRequest().toUpperCase();
+		final String status = log.getStatus().toUpperCase();
+		final String userAgent = log.getUserAgent().toUpperCase();
 
-        return transformedLog;
-    }
+		transformedLog = new LogDTO(date, ip, request, status, userAgent);
+		logger.info("CONVERTING AND SAVE RECORD (" + log + ") INTO (" + transformedLog + ")");
+
+		logRepository.save(LogBuilder.getLogEntity(log));
+
+		return transformedLog;
+	}
+
+	public BlockedIpRepository getBlockedIpRepository() {
+		return blockedIpRepository;
+	}
+
+	public void setBlockedIpRepository(BlockedIpRepository blockedIpRepository) {
+		this.blockedIpRepository = blockedIpRepository;
+	}
+
+	public LogRepository getLogRepository() {
+		return logRepository;
+	}
+
+	public void setLogRepository(LogRepository logRepository) {
+		this.logRepository = logRepository;
+	}
+
 }

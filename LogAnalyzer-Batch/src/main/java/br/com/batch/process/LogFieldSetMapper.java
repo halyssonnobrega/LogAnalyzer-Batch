@@ -15,7 +15,7 @@ public class LogFieldSetMapper implements FieldSetMapper<LogDTO> {
 
 		log.setDate(fieldSet.readString("date"));
 		log.setIp(fieldSet.readString("ip"));
-		log.setRequet(fieldSet.readString("request"));
+		log.setRequest(fieldSet.readString("request"));
 		log.setStatus(fieldSet.readString("status"));
 		log.setUserAgent(fieldSet.readString("userAgent"));
 		

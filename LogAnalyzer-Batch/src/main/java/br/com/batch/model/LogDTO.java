@@ -4,7 +4,7 @@ public class LogDTO {
 	
 	private String date;
 	private String ip;	
-	private String requet;
+	private String request;
 	private String status;
 	private String userAgent;
 
@@ -12,10 +12,10 @@ public class LogDTO {
 
 	}
 
-	public LogDTO(String date, String ip, String requet, String status, String userAgent) {
+	public LogDTO(String date, String ip, String request, String status, String userAgent) {
 		this.date = date;
 		this.ip = ip;
-		this.requet = requet;
+		this.request = request;
 		this.status = status;
 		this.userAgent = userAgent;
 	}
@@ -36,12 +36,12 @@ public class LogDTO {
 		this.ip = ip;
 	}
 
-	public String getRequet() {
-		return requet;
+	public String getRequest() {
+		return request;
 	}
 
-	public void setRequet(String requet) {
-		this.requet = requet;
+	public void setRequest(String request) {
+		this.request = request;
 	}
 
 	public String getStatus() {
@@ -65,7 +65,7 @@ public class LogDTO {
 		StringBuilder result = new StringBuilder();
 		result.append("Date: ").append(this.date);
 		result.append(", IP: ").append(this.ip);
-		result.append(", Request: ").append(this.requet);
+		result.append(", Request: ").append(this.request);
 		result.append(", Status: ").append(this.status);
 		result.append(", User Agent: ").append(this.userAgent);
 		return result.toString();

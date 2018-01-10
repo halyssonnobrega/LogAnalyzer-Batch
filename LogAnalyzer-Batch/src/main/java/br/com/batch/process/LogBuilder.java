@@ -13,7 +13,7 @@ public abstract class LogBuilder {
 		
 		logEntity.setDate(logDTO.getDate());
 		logEntity.setIp(logDTO.getIp());
-		logEntity.setRequet(logDTO.getRequet());
+		logEntity.setRequest(logDTO.getRequest());
 		logEntity.setStatus(logDTO.getStatus());
 		logEntity.setUserAgent(logDTO.getUserAgent());
 
