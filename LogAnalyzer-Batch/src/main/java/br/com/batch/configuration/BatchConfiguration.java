@@ -70,7 +70,7 @@ public class BatchConfiguration {
 	public ItemReader<LogDTO> reader() {
     	logger.info("BATCH JOB READER");
 		FlatFileItemReader<LogDTO> reader = new FlatFileItemReader<LogDTO>();
-		reader.setResource(new ClassPathResource("access.log"));
+		reader.setResource(new ClassPathResource(LogSystem.accesslog));
 		reader.setLineMapper(lineMapper());
 		return reader;
 	}

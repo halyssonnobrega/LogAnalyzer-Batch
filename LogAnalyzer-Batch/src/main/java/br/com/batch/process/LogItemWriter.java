@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;
 
+import br.com.batch.configuration.LogSystem;
 import br.com.batch.entity.BlockedIpEntity;
 import br.com.batch.entity.LogEntity;
 import br.com.batch.model.LogDTO;
@@ -33,7 +34,7 @@ public class LogItemWriter implements ItemWriter<LogDTO> {
 
 		logger.info("INSERTING " + items.size() + " RECORDS...");
 		
-		List<LogEntity> listLog = logRepository.findAll();
+		List<LogEntity> listLog = logRepository.findAll(); //TODO: AJUST QUERY
 		
 		Collections.sort(listLog, new LogEntity());
 		
@@ -56,7 +57,7 @@ public class LogItemWriter implements ItemWriter<LogDTO> {
 		
 		for(String key : map.keySet()) {
 			BlockedIpEntity BlockedIp = map.get(key);
-			if (BlockedIp.getQuantity() > 100) {
+			if (BlockedIp.getQuantity() > LogSystem.threshold) {
 				BlockedIp.setMessage("IP is blocked");
 				System.out.println("IP: " + BlockedIp.getIp());
 				System.out.println("Quantity: " + BlockedIp.getQuantity());
