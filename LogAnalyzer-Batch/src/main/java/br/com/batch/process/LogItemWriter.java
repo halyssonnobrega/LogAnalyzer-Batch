@@ -46,8 +46,9 @@ public class LogItemWriter implements ItemWriter<LogDTO> {
 		for (LogEntity log : listLog) {
 			if ( (LogSystem.startDate != null && dateIsValid(log.getDate())) 
 					|| LogSystem.startDate == null) {
+				
 				String key = log.getIp();
-
+				
 				if (!map.containsKey(key)) {
 					BlockedIpEntity ip = new BlockedIpEntity();
 					ip.setIp(log.getIp());
@@ -79,18 +80,22 @@ public class LogItemWriter implements ItemWriter<LogDTO> {
 		boolean isValid = false;
 		
 		String dateFormat = date.substring (0, date.length() - 4);
-		Date d = DateFormat.parseStringToDate(dateFormat);
+		Date dt = DateFormat.parseStringToDate(dateFormat);
 		
 		Date startDate = DateFormat.parseStringToDate(LogSystem.startDate.replace(".", " "));
 		Date endDate = DateFormat.parseStringToDate(LogSystem.startDate.replace(".", " "));
-		
-		if (LogSystem.duration.toUpperCase().equals(DurationEnum.DAILY.name())) {
-			endDate = DateFormat.addDay(endDate, DurationEnum.DAILY);
-		} else if (LogSystem.duration.toUpperCase().equals(DurationEnum.HOURLY.name())) {
-			endDate = DateFormat.addHour(endDate, DurationEnum.HOURLY);
+				
+		if (LogSystem.duration != null) {			
+			if (LogSystem.duration.toUpperCase().equals(DurationEnum.DAILY.name())) {
+				endDate = DateFormat.addDay(endDate, DurationEnum.DAILY);
+			} else if (LogSystem.duration.toUpperCase().equals(DurationEnum.HOURLY.name())) {
+				endDate = DateFormat.addHour(endDate, DurationEnum.HOURLY);
+			}
 		}
 		
-		if (d.compareTo(startDate) >= 0  && d.compareTo(endDate) <= 0) {
+		if (dt.compareTo(startDate) >= 0  && dt.compareTo(endDate) <= 0) {
+			logger.info("Requests starting from " + startDate + " to " + endDate + " | " + "Date : " + dt);
+			
 			isValid = true;
 		}
 		
