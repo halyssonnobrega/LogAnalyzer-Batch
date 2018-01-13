@@ -1,4 +1,4 @@
-package br.com.batch.model;
+package br.com.batch.model.dto;
 
 public class LogDTO {
 	

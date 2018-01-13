@@ -1,11 +1,11 @@
-package br.com.batch.entity;
+package br.com.batch.model.entity;
 
 import java.util.Comparator;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="log")
-public class LogEntity implements Comparator<LogEntity>{
+@Document(collection = "log")
+public class LogEntity implements Comparator<LogEntity> {
 
 	private String date;
 
@@ -56,7 +56,7 @@ public class LogEntity implements Comparator<LogEntity>{
 	public void setUserAgent(String userAgent) {
 		this.userAgent = userAgent;
 	}
-	
+
 	@Override
 	public int compare(LogEntity arg0, LogEntity arg1) {
 		return arg0.getIp().compareToIgnoreCase(arg1.getIp());

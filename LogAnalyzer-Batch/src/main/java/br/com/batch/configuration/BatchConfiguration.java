@@ -20,13 +20,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
-import br.com.batch.model.LogDTO;
+import br.com.batch.model.dto.LogDTO;
+import br.com.batch.model.repository.BlockedIpRepository;
+import br.com.batch.model.repository.LogRepository;
 import br.com.batch.process.JobCompletionListener;
 import br.com.batch.process.LogFieldSetMapper;
 import br.com.batch.process.LogItemProcessor;
 import br.com.batch.process.LogItemWriter;
-import br.com.batch.repository.BlockedIpRepository;
-import br.com.batch.repository.LogRepository;
 
 @Configuration
 @EnableBatchProcessing

@@ -4,9 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 
-import br.com.batch.model.LogDTO;
-import br.com.batch.repository.BlockedIpRepository;
-import br.com.batch.repository.LogRepository;
+import br.com.batch.model.dto.LogDTO;
+import br.com.batch.model.repository.BlockedIpRepository;
+import br.com.batch.model.repository.LogRepository;
 
 public class LogItemProcessor implements ItemProcessor<LogDTO, LogDTO> {
 	private static final Logger logger = LoggerFactory.getLogger(LogItemProcessor.class);
@@ -31,7 +31,7 @@ public class LogItemProcessor implements ItemProcessor<LogDTO, LogDTO> {
 	public LogDTO process(final LogDTO log) throws Exception {
 		logger.info("BATCH JOB PROCESS");
 
-		final String date = log.getDate().toUpperCase();
+		final String date = log.getDate();
 		final String ip = log.getIp().toUpperCase();
 		final String request = log.getRequest().toUpperCase();
 		final String status = log.getStatus().toUpperCase();

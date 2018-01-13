@@ -4,7 +4,7 @@ import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.validation.BindException;
 
-import br.com.batch.model.LogDTO;
+import br.com.batch.model.dto.LogDTO;
 
 public class LogFieldSetMapper implements FieldSetMapper<LogDTO> {
 

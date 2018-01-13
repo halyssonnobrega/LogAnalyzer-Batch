@@ -1,4 +1,4 @@
-package br.com.batch.entity;
+package br.com.batch.model.entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

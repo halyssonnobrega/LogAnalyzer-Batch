@@ -1,7 +1,7 @@
 package br.com.batch.process;
 
-import br.com.batch.entity.LogEntity;
-import br.com.batch.model.LogDTO;
+import br.com.batch.model.dto.LogDTO;
+import br.com.batch.model.entity.LogEntity;
 
 public abstract class LogBuilder {
 
