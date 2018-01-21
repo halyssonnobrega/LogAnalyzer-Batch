@@ -1,0 +1,39 @@
+Deliverables:
+
+(1) Java program that can be run from command line:
+
+https://github.com/halyssonnobrega/LogAnalyzer-Batch/tree/master/LogAnalyzer-Batch/target/LogAnalyzer-Batch-0.0.2-SNAPSHOT.jar
+
+java -jar LogAnalyzer-Batch-0.0.2-SNAPSHOT.jar --accesslog=access.log --startDate=2017-01-01.13:00:00 --duration=hourly --threshold=100
+
+(2) Source Code for the Java program
+
+Link Git: https://github.com/halyssonnobrega/LogAnalyzer-Batch
+
+(3) MySQL schema used for the log data
+
+Just need to install MongoDB
+
+(4) SQL queries for SQL test
+
+(4.1) Write MySQL query to find IPs that mode more than a certain number of requests for a given time period.
+
+    Ex: Write SQL to find IPs that made more than 100 requests starting from 2017-01-01.13:00:00 to 2017-01-01.14:00:00.
+	
+	RESPOSTA MYSQL: 
+		SELECT IP, COUNT(IP) AS 'QUANTITY' 
+		FROM tbg_log 
+		WHERE DATE BETWEEN '2017-01-01 00:00:00.000' AND '2017-01-02 24:00:00.000' 
+		GROUP BY IP 
+		HAVING COUNT(IP) > 99;
+
+	RESPOSTA MONGODB: 
+		db.log.find({date: {$gt: '2017-01-01.13:00:00', $lt: '2017-01-01.14:00:00'}}).pretty()
+
+(4.2) Write MySQL query to find requests made by a given IP.
+ 	
+	RESPOSTA MYSQL:
+		SELECT * FROM TBG_LOG WHERE IP = '192.168.172.127';
+
+	RESPOSTA MONGODB:
+		db.log.find( { ip: "192.168.172.127" } ).pretty()
